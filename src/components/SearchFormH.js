@@ -70,7 +70,6 @@ const SearchFormH = props => {
 					ticket.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
 					ticket.category.toLowerCase().includes(searchTerm.toLowerCase())
 			);
-			console.log('useEffect Search Results = ' + results);
 			setSearchResultsH([...results]);
 		}
 	}, [searchTerm, props.ticketsH]);
@@ -78,13 +77,10 @@ const SearchFormH = props => {
 	const handleChange = event => {
 		setSearchTerm(event.target.value);
 	};
-	console.log('profile id = ' + props.profile.id);
 
 	function expandList() {
 		let listToExpand = document.getElementById('searchFormH');
-		console.log('ticketListH height = ' + listToExpand.style.height);
 		let currentDisplay = listToExpand.style.display;
-		console.log(currentDisplay);
 		let expandDivText = document.getElementById('expandListTextH');
 		if (currentDisplay !== 'none') {
 			listToExpand.style.display = 'none';

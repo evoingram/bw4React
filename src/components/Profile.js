@@ -68,15 +68,11 @@ const fieldLength = {
 const Profile = ({ profile, values, errors, touched, status }) => {
 	// fields: name, email, change password, usertype display, save button for acct changes
 
-	console.log('profile profile = ' + profile.email);
 	values.name = profile.name;
 	values.email = profile.email;
 	values.password = profile.password;
 
 	function updateProfile(profile, values, event) {
-		console.log(profile.usersid);
-		console.log(values);
-		console.log(profile);
 		profile = values;
 
 		let config = {
@@ -88,12 +84,8 @@ const Profile = ({ profile, values, errors, touched, status }) => {
 		let url = `https://devdesk2eli.herokuapp.com/api/users/${profile.usersid}`;
 		axios
 			.put(url, profile, config)
-			.then(res => {
-				console.log('res = ' + res);
-			})
-			.catch(err => {
-				console.log(err); // logs error creating the data
-			});
+			.then(res => {})
+			.catch(err => {});
 	}
 	return (
 		<Center>
@@ -174,14 +166,12 @@ const FormikForm = withFormik({
 		axios
 			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values)
 			.then(res => {
-				console.log('login response = ' + res.data); // Data was created successfully and logs to console
 				setStatus(res.data);
 				resetForm();
 				setSubmitting(false);
 				loadForm();
 			})
 			.catch(err => {
-				console.log(err); // logs error creating the data
 				setSubmitting(false);
 			});
 	}

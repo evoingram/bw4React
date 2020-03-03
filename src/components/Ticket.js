@@ -97,12 +97,8 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticket.id}`;
 		axios
 			.put(url, ticket, config)
-			.then(res => {
-				console.log('res = ' + res);
-			})
-			.catch(err => {
-				console.log(err); // logs error creating the data
-			});
+			.then(res => {})
+			.catch(err => {});
 	}
 	return (
 		<Div1>
@@ -211,7 +207,6 @@ const FormikForm = withFormik({
 				loadForm();
 			})
 			.catch(err => {
-				console.log(err); // logs error creating the data
 				setSubmitting(false);
 			});
 	}

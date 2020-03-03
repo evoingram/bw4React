@@ -121,18 +121,6 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 				} else {
 					values.statusText = 'in progress';
 				}
-
-				console.log('res = ' + res);
-				console.log({
-					id: ticketID,
-					title: ticket.title,
-					date: ticket.date,
-					category: ticket.category,
-					statusText: values.statusText,
-					description: ticket.description,
-					submitid: ticket.submitid,
-					helperid: ticket.helperid
-				});
 			})
 			.catch(err => {
 				if (values.statusesid === 1) {
@@ -142,17 +130,6 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 				} else {
 					values.statusText = 'in progress';
 				}
-				console.log(err);
-				console.log({
-					id: ticketID,
-					title: ticket.title,
-					date: ticket.date,
-					category: ticket.category,
-					statusText: values.statusText,
-					description: ticket.description,
-					submitid: ticket.submitid,
-					helperid: ticket.helperid
-				});
 			});
 	}
 
@@ -263,14 +240,12 @@ const FormikForm = withFormik({
 		axios
 			.get('https://devdesk2eli.herokuapp.com/api/tickets/queue', config)
 			.then(res => {
-				console.log('login response = ' + res.data);
 				setStatus(res.data);
 				resetForm();
 				setSubmitting(false);
 				loadForm();
 			})
 			.catch(err => {
-				console.log(err);
 				setSubmitting(false);
 			});
 	}

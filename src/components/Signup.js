@@ -188,7 +188,6 @@ const FormikForm = withFormik({
 		axios
 			.post('https://devdesk2eli.herokuapp.com/api/register', values)
 			.then(res => {
-				console.log('login response = ' + res.data);
 				localStorage.setItem('token', res.data.token);
 				setStatus(res.data);
 				resetForm();
@@ -197,7 +196,6 @@ const FormikForm = withFormik({
 					'Your profile has been created, and you may log in now.';
 			})
 			.catch(err => {
-				console.log(err);
 				setSubmitting(false);
 			});
 	}

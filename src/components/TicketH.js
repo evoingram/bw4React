@@ -68,23 +68,17 @@ const fieldLength = {
 };
 const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 	values.title = ticket.title;
-	values.date = ticket.date;
-	console.log(values.date);
 	values.category = ticket.category;
 	values.statusT = ticket.status;
 	values.description = ticket.description;
 
 	function updateTicket(ticketID, currentTicketStatus, event) {
 		if (currentTicketStatus === 'resolved' && event.target.id === 'btnR' + ticketID) {
-			console.log(event.target.id);
 			ticket.status = 'resolved';
 		}
 		if (currentTicketStatus === 'queue' && event.target.id === 'btnQ' + ticketID) {
-			console.log(event.target.id);
 			ticket.status = 'queue';
 		}
-		console.log('ticketID = ' + ticketID);
-		console.log('values = ' + values);
 		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`;
 		axios.defaults.headers.put['Content-Type'] = 'application/json';
 		let axiosConfig = {
@@ -96,32 +90,8 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 
 		axios
 			.put(url, { status: values.statusT }, axiosConfig)
-			.then(res => {
-				console.log('res = ' + res);
-				console.log({
-					id: ticketID,
-					title: ticket.title,
-					date: ticket.date,
-					category: ticket.category,
-					status: values.statusT,
-					description: ticket.description,
-					submitid: ticket.submitid,
-					helperid: ticket.helperid
-				});
-			})
-			.catch(err => {
-				console.log(err); // logs error creating the data
-				console.log({
-					id: ticketID,
-					title: ticket.title,
-					date: ticket.date,
-					category: ticket.category,
-					status: values.statusT,
-					description: ticket.description,
-					submitid: ticket.submitid,
-					helperid: ticket.helperid
-				});
-			});
+			.then(res => {})
+			.catch(err => {});
 	}
 	return (
 		<Div1>
@@ -254,14 +224,12 @@ const FormikForm = withFormik({
 		axios
 			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values, config)
 			.then(res => {
-				console.log('login response = ' + res.data); // Data was created successfully and logs to console
 				setStatus(res.data);
 				resetForm();
 				setSubmitting(false);
 				loadForm();
 			})
 			.catch(err => {
-				console.log(err); // logs error creating the data
 				setSubmitting(false);
 			});
 	}

@@ -143,7 +143,6 @@ const Ticket = ({
 
 const FormikForm = withFormik({
 	mapPropsToValues({ profile, usersid, date, title, category, statusT, description }) {
-		console.log(profile.usersid);
 		const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 		return {
 			title: title || '',
@@ -180,16 +179,6 @@ const FormikForm = withFormik({
 				authorization: localStorage.getItem('token')
 			}
 		};
-		console.log(
-			'values = ' +
-				`
-					statusesid: 1,
-					studentid: ${values.studentid},
-					title: ${values.title},
-					description: ${values.description},
-					category: ${values.category}
-				`
-		);
 		let newValues = {
 			statusesid: 1,
 			studentid: `${values.studentid}`,
@@ -200,32 +189,23 @@ const FormikForm = withFormik({
 		await axios
 			.post('https://devdesk2eli.herokuapp.com/api/tickets/', newValues, config)
 			.then(res => {
-				console.log('login response = ' + res.data);
 				setStatus(res.data);
 				document.getElementById('complete').textContent = 'Your ticket has been submitted.';
 				resetForm();
 				setSubmitting(false);
 			})
 			.catch(err => {
-				console.log(err);
 				setSubmitting(false);
 			});
 
 		let url = `https://devdesk2eli.herokuapp.com/api/tickets/students/${values.studentid}`;
-		console.log(url);
 		await axios
 			.get(url, values, config)
 			.then(res => {
-				console.log('form response = ');
-				console.log(res.data);
-				console.log('form tickets = ' + res.data);
-
 				setTickets(res.data);
 				setSearchResults(res.data);
 			})
-			.catch(err => {
-				console.log(err);
-			});
+			.catch(err => {});
 	}
 })(Ticket);
 
