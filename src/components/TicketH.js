@@ -244,6 +244,13 @@ const FormikForm = withFormik({
 				authorization: localStorage.getItem('token')
 			}
 		};
+		if (values.statusesid === 1) {
+			let statusText = 'queue';
+		} else if (values.statusesid === 2) {
+			let statusText = 'resolved';
+		} else {
+			let statusText = 'in progress';
+		}
 		axios
 			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values, config)
 			.then(res => {

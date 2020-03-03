@@ -73,11 +73,15 @@ const fieldLength = {
 	padding: '0'
 };
 const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status }) => {
+	if (values.statusesid === 1) {
+		values.statusText = 'queue';
+	} else if (values.statusesid === 2) {
+		values.statusText = 'resolved';
+	} else {
+		values.statusText = 'in progress';
+	}
 	values.title = ticket.title;
-	values.date = ticket.date;
-	console.log(values.date);
 	values.category = ticket.category;
-	values.statusT = ticket.status;
 	values.description = ticket.description;
 	// https://devdesk2eli.herokuapp.com/api
 	function updateTicket(ticketID, currentTicketStatus, helperID, event) {
@@ -94,35 +98,57 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 			},
 			body: values
 		};
+		if (values.statusesid === 1) {
+			values.statusText = 'queue';
+		} else if (values.statusesid === 2) {
+			values.statusText = 'resolved';
+		} else {
+			values.statusText = 'in progress';
+		}
 		axios
 			.put(
 				url,
 				{
-					status: values.statusT
+					status: values.statusText
 				},
 				axiosConfig
 			)
 			.then(res => {
+				if (values.statusesid === 1) {
+					values.statusText = 'queue';
+				} else if (values.statusesid === 2) {
+					values.statusText = 'resolved';
+				} else {
+					values.statusText = 'in progress';
+				}
+
 				console.log('res = ' + res);
 				console.log({
 					id: ticketID,
 					title: ticket.title,
 					date: ticket.date,
 					category: ticket.category,
-					status: values.statusT,
+					statusText: values.statusText,
 					description: ticket.description,
 					submitid: ticket.submitid,
 					helperid: ticket.helperid
 				});
 			})
 			.catch(err => {
+				if (values.statusesid === 1) {
+					values.statusText = 'queue';
+				} else if (values.statusesid === 2) {
+					values.statusText = 'resolved';
+				} else {
+					values.statusText = 'in progress';
+				}
 				console.log(err);
 				console.log({
 					id: ticketID,
 					title: ticket.title,
 					date: ticket.date,
 					category: ticket.category,
-					status: values.statusT,
+					statusText: values.statusText,
 					description: ticket.description,
 					submitid: ticket.submitid,
 					helperid: ticket.helperid
@@ -137,7 +163,7 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 				{touched.title && errors.title && <p>{errors.title}</p>}
 				{touched.date && errors.date && <p>{errors.date}</p>}
 				{touched.category && errors.category && <p>{errors.category}</p>}
-				{touched.statusT && errors.statusT && <p>{errors.statusT}</p>}
+				{touched.statusText && errors.statusText && <p>{errors.statusText}</p>}
 				{touched.description && errors.description && <p>{errors.description}</p>}
 				<Div>
 					<FormField>
@@ -148,18 +174,6 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 								name="title"
 								placeholder={ticket.title}
 								value={values.title}
-								style={fieldLength}
-							/>
-						</SCField>
-					</FormField>
-					<FormField>
-						<Label>Date Submitted:</Label>
-						<SCField>
-							<Field
-								type="text"
-								name="date"
-								placeholder={ticket.date}
-								value={values.date}
 								style={fieldLength}
 							/>
 						</SCField>
@@ -182,8 +196,8 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 							<Field
 								type="text"
 								name="statusT"
-								placeholder={values.statusT}
-								value={values.statusT}
+								placeholder={values.statusText}
+								value={values.statusText}
 								style={fieldLength}
 							/>
 						</SCField>

@@ -75,13 +75,16 @@ const fieldLength = {
 
 const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 	values.title = ticket.title;
-	values.date = ticket.date;
-	console.log(values.date);
-	console.log(values.date);
 	values.category = ticket.category;
-	values.statusT = ticket.status;
 	values.description = ticket.description;
 
+	if (values.statusesid === 1) {
+		values.statusText = 'queue';
+	} else if (values.statusesid === 2) {
+		values.statusText = 'resolved';
+	} else {
+		values.statusText = 'in progress';
+	}
 	function updateTicket(ticket, values, event) {
 		let config = {
 			headers: {
@@ -107,9 +110,8 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 			<Form>
 				<Div>
 					{touched.title && errors.title && <p>{errors.title}</p>}
-					{touched.date && errors.date && <p>{errors.date}</p>}
 					{touched.category && errors.category && <p>{errors.category}</p>}
-					{touched.statusT && errors.statusT && <p>{errors.statusT}</p>}
+					{touched.statusText && errors.statusText && <p>{errors.statusText}</p>}
 					{touched.description && errors.description && <p>{errors.description}</p>}
 					<FormField>
 						<Label>Title:</Label>
@@ -119,18 +121,6 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 								name="title"
 								placeholder={ticket.title}
 								value={values.title}
-								style={fieldLength}
-							/>
-						</SCField>
-					</FormField>
-					<FormField>
-						<Label>Date Submitted:</Label>
-						<SCField>
-							<Field
-								type="text"
-								name="date"
-								placeholder={ticket.date}
-								value={values.date}
 								style={fieldLength}
 							/>
 						</SCField>
@@ -152,9 +142,9 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 						<SCField>
 							<Field
 								type="text"
-								name="statusT"
-								placeholder={ticket.statusT}
-								value={values.statusT}
+								name="statusText"
+								placeholder={values.statusText}
+								value={values.statusText}
 								style={fieldLength}
 							/>
 						</SCField>
@@ -182,17 +172,14 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 	);
 };
 
-// TODO: 2 Some form validation is in place.
-// TODO: 3 Form validation is in place for all fields, and covers all use cases.
-// TODO: 2 Student made the decision to use a third-party library, like Formik, or not, and can defend their decision.
 const FormikForm = withFormik({
-	mapPropsToValues({ submitid, date, title, category, statusT, description }) {
+	mapPropsToValues({ submitid, date, title, category, statusText, description }) {
 		return {
 			submitid: submitid || '',
 			date: date || '',
 			title: title || '',
 			category: category || '',
-			statusT: statusT || '',
+			statusText: statusText || '',
 			description: description || ''
 		};
 	},
@@ -209,8 +196,6 @@ const FormikForm = withFormik({
 			.required('Description is required')
 	}),
 
-	// TODO: 2 Student implemented GET requests using either Axios or Fetch to display 3rd party data on a deployed page.
-	// TODO: axios get request or parse response
 	handleSubmit(values, { setStatus, resetForm, setErrors, setSubmitting }) {
 		let config = {
 			headers: {
