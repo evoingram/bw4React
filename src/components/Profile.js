@@ -66,41 +66,28 @@ const fieldLength = {
 	padding: '0'
 };
 const Profile = ({ profile, values, errors, touched, status }) => {
-	// TODO: 3 Not only are standard network request techniques employed, the code is organized in such a fashion that the student demonstrated proper use of container vs presentational components or other industry standards, conventions or patterns.
+	// fields: name, email, change password, usertype display, save button for acct changes
 
-	// TODO: 3 Student showed great insight in setting up the state management for the app's forms.
-	// TODO: 2 proper usage of state and props are demonstrated throughout the project
-	// TODO: 2 proper usage of useState and useEffect hooks are clearly incorporated and correctly implemented.
-
-	// TODO: 3 Student incorporated a third party event/animation library like unto Greensock, Anime, React-motion etc.
-	// TODO: 2 Student used Array methods to dynamically render HTML elements.
-	// TODO: 3 Loading states and success/error notifications are in place and add to the overall UX of the app.
-	// TODO: 3 Student used advanced React techniques like the composition pattern, custom hooks, render props, HOCs, etc.
-
-	// TODO: 3 Student was able to architect components to be easily reused.
-	// TODO: 2 Student created functional components and used events in application to add dynamic functionality to app.
-	// TODO: 2 the UI is composed of small reusable components
-	// TODO: 2 Student's code was organized at the component level
-	// TODO: 2 Student has set up component management for the forms in the app that makes sense for each form.
-
-	// fields: name, username, email, change password, usertype display, save button for acct changes
-
-	console.log('profile profile = ' + profile.username);
+	console.log('profile profile = ' + profile.email);
 	values.name = profile.name;
-	values.username = profile.username;
-	values.usertype = profile.usertype;
 	values.email = profile.email;
 	values.password = profile.password;
 
 	function updateProfile(profile, values, event) {
-		console.log(profile.id);
+		console.log(profile.usersid);
 		console.log(values);
 		console.log(profile);
 		profile = values;
-		let url = `https://devdesk2eli.herokuapp.com/api/users/${profile.id}`;
-		axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token'),
+				'Content-Type': 'application/json'
+			}
+		};
+		let url = `https://devdesk2eli.herokuapp.com/api/users/${profile.usersid}`;
 		axios
-			.put(url, profile)
+			.put(url, profile, config)
 			.then(res => {
 				console.log('res = ' + res);
 			})
@@ -108,28 +95,14 @@ const Profile = ({ profile, values, errors, touched, status }) => {
 				console.log(err); // logs error creating the data
 			});
 	}
-	// TODO: Profile page displaying fields
 	return (
 		<Center>
 			<H1>Profile Information:</H1>
 			<Form>
 				<Div>
 					{touched.name && errors.name && <p>{errors.name}</p>}
-					{touched.username && errors.username && <p>{errors.username}</p>}
 					{touched.email && errors.email && <p>{errors.email}</p>}
 					{touched.password && errors.password && <p>{errors.password}</p>}
-					<FormField>
-						<Label>User Type:</Label>
-						<SCField>
-							<Field
-								type="text"
-								name="usertype"
-								placeholder={profile.usertype}
-								value={values.usertype}
-								style={fieldLength}
-							/>
-						</SCField>
-					</FormField>
 					<FormField>
 						<Label>Name:</Label>
 						<SCField>
@@ -138,18 +111,6 @@ const Profile = ({ profile, values, errors, touched, status }) => {
 								name="name"
 								placeholder={profile.name}
 								value={values.name}
-								style={fieldLength}
-							/>
-						</SCField>
-					</FormField>
-					<FormField>
-						<Label>Slack Username:</Label>
-						<SCField>
-							<Field
-								type="username"
-								name="username"
-								placeholder={profile.username}
-								value={values.username}
 								style={fieldLength}
 							/>
 						</SCField>
@@ -193,10 +154,9 @@ const Profile = ({ profile, values, errors, touched, status }) => {
 // TODO: 2 Student made the decision to use a third-party library, like Formik, or not, and can defend their decision.
 
 const FormikForm = withFormik({
-	mapPropsToValues({ name, username, email, password }) {
+	mapPropsToValues({ name, email, password }) {
 		return {
 			name: name || '',
-			username: username || '',
 			email: email || '',
 			password: password || ''
 		};
@@ -206,9 +166,6 @@ const FormikForm = withFormik({
 		name: Yup.string()
 			.min(5, 'Name must be at least five characters.')
 			.required('Name is required'),
-		username: Yup.string()
-			.min(5, 'Username must be at least five characters.')
-			.required('Username is required'),
 		email: Yup.string()
 			.email('Email not valid')
 			.required('Email is required'),

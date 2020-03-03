@@ -83,11 +83,17 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 	values.description = ticket.description;
 
 	function updateTicket(ticket, values, event) {
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token'),
+				'Content-Type': 'application/json'
+			}
+		};
+
 		ticket = values;
 		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticket.id}`;
-		axios.defaults.headers.common['Content-Type'] = 'application/json';
 		axios
-			.put(url, ticket)
+			.put(url, ticket, config)
 			.then(res => {
 				console.log('res = ' + res);
 			})
@@ -206,8 +212,13 @@ const FormikForm = withFormik({
 	// TODO: 2 Student implemented GET requests using either Axios or Fetch to display 3rd party data on a deployed page.
 	// TODO: axios get request or parse response
 	handleSubmit(values, { setStatus, resetForm, setErrors, setSubmitting }) {
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token')
+			}
+		};
 		axios
-			.get(`https://devdesk2eli.herokuapp.com/api/tickets/${values.submitid}`, values)
+			.get(`https://devdesk2eli.herokuapp.com/api/tickets/${values.submitid}`, values, config)
 			.then(res => {
 				setStatus(res.data);
 				resetForm();

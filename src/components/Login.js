@@ -92,14 +92,12 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 			if (status != null) {
 				// get usertype/id of logging-in user
 				setCurrentUsertype(`${status.usertype}`);
-				setCurrentUserID(`${status.id}`);
+				setCurrentUserID(`${status.usersid}`);
 				setProfile({
-					id: status.id,
+					usersid: status.usersid,
 					name: status.name,
-					username: status.username,
 					email: status.email,
-					password: status.password,
-					usertype: status.usertype
+					password: status.password
 				});
 				let url;
 				if (status.usertype === 'helper') {
@@ -112,8 +110,8 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 						.catch(err => {
 							console.log(err);
 						});
-					setTicketURL(`https://devdesk2eli.herokuapp.com/api/tickets/helpers/${status.id}`);
-					url = `https://devdesk2eli.herokuapp.com/api/tickets/helpers/${status.id}`;
+					setTicketURL(`https://devdesk2eli.herokuapp.com/api/tickets/helpers/${status.usersid}`);
+					url = `https://devdesk2eli.herokuapp.com/api/tickets/helpers/${status.usersid}`;
 
 					axios
 						.get(url)
@@ -125,9 +123,9 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 							console.log(err);
 						});
 				} else {
-					setTicketURL(`https://devdesk2eli.herokuapp.com/api/tickets/${status.id}`);
+					setTicketURL(`https://devdesk2eli.herokuapp.com/api/tickets/${status.usersid}`);
 				}
-				url = `https://devdesk2eli.herokuapp.com/api/tickets/${status.id}`;
+				url = `https://devdesk2eli.herokuapp.com/api/tickets/${status.usersid}`;
 
 				setLoggedIn(!loggedIn);
 
@@ -238,11 +236,13 @@ if (UserForm.loggedIn === true) {
 		}),
 
 		handleSubmit(values, { status, setStatus, resetForm, setErrors, setSubmitting }) {
-			let url = `https://devdesk2eli.herokuapp.com/api/users?email=${values.email}`;
+			let url = `https://devdesk2eli.herokuapp.com/api/login`;
 			axios
-				.get(url, values)
+				.post(url, values)
 				.then(res => {
-					setStatus(res.data[0]);
+					localStorage.setItem('token', res.data.token);
+					console.log('res.data = ' + res.data.usersid);
+					setStatus(res.data);
 					resetForm();
 					setSubmitting(false);
 				})

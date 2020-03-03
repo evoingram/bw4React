@@ -90,9 +90,10 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 		let axiosConfig = {
 			url: `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`,
 			method: 'PUT',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'application/json', authorization: localStorage.getItem('token') },
 			body: values
 		};
+
 		axios
 			.put(url, { status: values.statusT }, axiosConfig)
 			.then(res => {
@@ -238,8 +239,13 @@ const FormikForm = withFormik({
 	}),
 
 	handleSubmit(values, { setStatus, resetForm, setErrors, setSubmitting }) {
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token')
+			}
+		};
 		axios
-			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values)
+			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values, config)
 			.then(res => {
 				console.log('login response = ' + res.data); // Data was created successfully and logs to console
 				setStatus(res.data);

@@ -82,13 +82,15 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 	// https://devdesk2eli.herokuapp.com/api
 	function updateTicket(ticketID, currentTicketStatus, helperID, event) {
 		values.helperid = helperID;
+
 		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`;
 		axios.defaults.headers.put['Content-Type'] = 'application/json';
 		let axiosConfig = {
 			url: `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`,
 			method: 'PUT',
 			headers: {
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				authorization: localStorage.getItem('token')
 			},
 			body: values
 		};
@@ -239,8 +241,13 @@ const FormikForm = withFormik({
 	}),
 
 	handleSubmit(values, { setStatus, resetForm, setErrors, setSubmitting }) {
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token')
+			}
+		};
 		axios
-			.get('https://devdesk2eli.herokuapp.com/api/tickets/queue')
+			.get('https://devdesk2eli.herokuapp.com/api/tickets/queue', config)
 			.then(res => {
 				console.log('login response = ' + res.data);
 				setStatus(res.data);

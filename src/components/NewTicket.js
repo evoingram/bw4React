@@ -142,8 +142,8 @@ const Ticket = ({
 };
 
 const FormikForm = withFormik({
-	mapPropsToValues({ profile, submitid, date, title, category, statusT, description }) {
-		console.log(profile.id);
+	mapPropsToValues({ profile, usersid, date, title, category, statusT, description }) {
+		console.log(profile.usersid);
 		const dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 		return {
 			title: title || '',
@@ -153,9 +153,8 @@ const FormikForm = withFormik({
 			category: category || '',
 			status: 'queue' || 'queue',
 			description: description || '',
-			submitid: profile.id || profile.id,
-			helperid: '' || '',
-			description: description || ''
+			studentid: profile.usersid || profile.usersid,
+			helperid: '' || ''
 		};
 	},
 	// validation schema
@@ -173,10 +172,32 @@ const FormikForm = withFormik({
 
 	async handleSubmit(
 		values,
-		{ submitid, currentUserID, setSearchResults, setTickets, setStatus, resetForm, setErrors, setSubmitting }
+		{ studentid, currentUserID, setSearchResults, setTickets, setStatus, resetForm, setErrors, setSubmitting }
 	) {
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token')
+			}
+		};
+		console.log(
+			'values = ' +
+				`
+					statusesid: 1,
+					studentid: ${values.studentid},
+					title: ${values.title},
+					description: ${values.description},
+					category: ${values.category}
+				`
+		);
+		let newValues = {
+			statusesid: 1,
+			studentid: `${values.studentid}`,
+			title: `${values.title}`,
+			description: `${values.description}`,
+			category: `${values.category}`
+		};
 		await axios
-			.post('https://devdesk2eli.herokuapp.com/api/tickets/', values)
+			.post('https://devdesk2eli.herokuapp.com/api/tickets/', newValues, config)
 			.then(res => {
 				console.log('login response = ' + res.data);
 				setStatus(res.data);
@@ -189,10 +210,10 @@ const FormikForm = withFormik({
 				setSubmitting(false);
 			});
 
-		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${values.submitid}`;
+		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${values.studentid}`;
 		console.log(url);
 		await axios
-			.get(url)
+			.get(url, config)
 			.then(res => {
 				console.log('form response = ');
 				console.log(res.data);

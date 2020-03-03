@@ -93,7 +93,6 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 			<LoginFormatting>
 				<Form>
 					{touched.name && errors.name && <p>{errors.name}</p>}
-					{touched.username && errors.username && <p>{errors.username}</p>}
 					{touched.email && errors.email && <p>{errors.email}</p>}
 					{touched.password && errors.password && <p>{errors.password}</p>}
 					{touched.cPassword && errors.cPassword && <p>{errors.cPassword}</p>}
@@ -102,18 +101,6 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 						<Label>Name:</Label>
 						<SCField>
 							<Field type="text" name="name" placeholder="Name" value={values.name} style={fieldLength} />
-						</SCField>
-					</FormField>
-					<FormField>
-						<Label>Slack Username:</Label>
-						<SCField>
-							<Field
-								type="text"
-								name="username"
-								placeholder="Username"
-								value={values.username}
-								style={fieldLength}
-							/>
 						</SCField>
 					</FormField>
 					<FormField>
@@ -183,9 +170,6 @@ const FormikForm = withFormik({
 		name: Yup.string()
 			.min(5, 'Name must be at least five characters.')
 			.required('Name is required'),
-		username: Yup.string()
-			.min(5, 'Username must be at least five characters.')
-			.required('Username is required'),
 		email: Yup.string()
 			.email('Email not valid')
 			.required('Email is required'),
@@ -205,6 +189,7 @@ const FormikForm = withFormik({
 			.post('https://devdesk2eli.herokuapp.com/api/register', values)
 			.then(res => {
 				console.log('login response = ' + res.data);
+				localStorage.setItem('token', res.data.token);
 				setStatus(res.data);
 				resetForm();
 				setSubmitting(false);
