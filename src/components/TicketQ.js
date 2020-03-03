@@ -86,7 +86,7 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 	// https://devdesk2eli.herokuapp.com/api
 	function updateTicket(ticketID, currentTicketStatus, helperID, event) {
 		values.helperid = helperID;
-
+		console.log('values = ' + values);
 		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`;
 		axios.defaults.headers.put['Content-Type'] = 'application/json';
 		let axiosConfig = {
@@ -197,7 +197,7 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 					<Button
 						type="submit"
 						id={'btnR' + ticket.id}
-						onClick={event => updateTicket(ticket.id, profile.id, event)}
+						onClick={event => updateTicket(ticket.ticketsid, ticket.helperid, event)}
 					>
 						Help Student
 					</Button>

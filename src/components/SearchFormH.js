@@ -66,7 +66,6 @@ const SearchFormH = props => {
 			const results = props.ticketsH.filter(
 				ticket =>
 					ticket.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-					ticket.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
 					ticket.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
 					ticket.category.toLowerCase().includes(searchTerm.toLowerCase())
 			);
