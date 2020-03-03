@@ -176,6 +176,7 @@ const FormikForm = withFormik({
 	) {
 		let config = {
 			headers: {
+				'Content-Type': 'application/json',
 				authorization: localStorage.getItem('token')
 			}
 		};
@@ -210,10 +211,10 @@ const FormikForm = withFormik({
 				setSubmitting(false);
 			});
 
-		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${values.studentid}`;
+		let url = `https://devdesk2eli.herokuapp.com/api/tickets/students/${values.studentid}`;
 		console.log(url);
 		await axios
-			.get(url, config)
+			.get(url, values, config)
 			.then(res => {
 				console.log('form response = ');
 				console.log(res.data);

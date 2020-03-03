@@ -149,10 +149,6 @@ const Profile = ({ profile, values, errors, touched, status }) => {
 	);
 };
 
-// TODO: 2 Some form validation is in place.
-// TODO: 3 Form validation is in place for all fields, and covers all use cases.
-// TODO: 2 Student made the decision to use a third-party library, like Formik, or not, and can defend their decision.
-
 const FormikForm = withFormik({
 	mapPropsToValues({ name, email, password }) {
 		return {
@@ -174,8 +170,6 @@ const FormikForm = withFormik({
 			.required('Password is required')
 	}),
 
-	// TODO: 2 Student implemented GET requests using either Axios or Fetch to display 3rd party data on a deployed page.
-	// TODO: axios get request or parse response
 	handleSubmit(values, { setStatus, resetForm, setErrors, setSubmitting }) {
 		axios
 			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values)

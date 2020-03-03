@@ -102,8 +102,14 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 				let url;
 				if (status.usertype === 'helper') {
 					url = `https://devdesk2eli.herokuapp.com/api/tickets/queue`;
+					let config = {
+						headers: {
+							authorization: localStorage.getItem('token'),
+							'Content-Type': 'application/json'
+						}
+					};
 					axios
-						.get(url)
+						.get(url, config)
 						.then(res => {
 							setTicketsQ(res.data);
 						})
@@ -114,7 +120,7 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 					url = `https://devdesk2eli.herokuapp.com/api/tickets/helpers/${status.usersid}`;
 
 					axios
-						.get(url)
+						.get(url, config)
 						.then(res => {
 							setTicketsH(res.data);
 							console.log('helper = ' + res.data);
@@ -123,14 +129,21 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 							console.log(err);
 						});
 				} else {
-					setTicketURL(`https://devdesk2eli.herokuapp.com/api/tickets/${status.usersid}`);
+					setTicketURL(`https://devdesk2eli.herokuapp.com/api/tickets/students/${status.usersid}`);
 				}
-				url = `https://devdesk2eli.herokuapp.com/api/tickets/${status.usersid}`;
+				url = `https://devdesk2eli.herokuapp.com/api/tickets/students/${status.usersid}`;
 
+				console.log('status.usersid = ' + status.usersid);
 				setLoggedIn(!loggedIn);
 
+				let config = {
+					headers: {
+						authorization: localStorage.getItem('token'),
+						'Content-Type': 'application/json'
+					}
+				};
 				axios
-					.get(url)
+					.get(url, config)
 					.then(res => {
 						setTickets(res.data);
 					})
