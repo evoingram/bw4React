@@ -1,11 +1,7 @@
 ## Build Week Project
 
+Live @ https://devdeskelireact.now.sh/
 
-- [ ] Rerender after posting new ticket not working
-- [ ] SLACK:  Build an integrated slack-bot that allows students to submit help tickets through slack. 
-- [ ] SLACK:  Allow the ability to subscribe to the Queue in slack to be notified if someone opens a ticket. 
-- [ ] Change urls for post/get/put/patch requests when backend up
-- [ ] If time allows, redo components to streamline headers, include classes, etc
-- [ ] If time allows, change background color of hover over ticket
-- [ ] Use advanced React techniques like the composition pattern, custom hooks, render props, HOCs, etc.
-- [ ] Incorporate a third party event/animation library like unto Greensock, Anime, React-motion etc.
+This is my old React I build week project, which previously only had a local back end, but since I did the back end for this same project, i decided to hook it up instead of keeping the localhost links on it!
+
+Still work in progress; haven't done update/put stuff yet.  But everything else works great.  Helpers can see their assigned tickets as well as the queue, and students can create tickets and view tickets they've created.  Helpers who are also students can see both.  You can view your profile but not edit it yet.
