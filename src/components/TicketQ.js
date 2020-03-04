@@ -168,18 +168,6 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 						</SCField>
 					</FormField>
 					<FormField>
-						<Label>Status:</Label>
-						<SCField>
-							<Field
-								type="text"
-								name="statusT"
-								placeholder={values.statusText}
-								value={values.statusText}
-								style={fieldLength}
-							/>
-						</SCField>
-					</FormField>
-					<FormField>
 						<Label>What Student Tried:</Label>
 						<SCField>
 							<Field

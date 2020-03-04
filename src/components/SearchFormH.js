@@ -56,7 +56,6 @@ hideLogin();
 // hide current page when sign-up showing
 hideSignup();
 
-// // TODO:  make each list headline clickable to expand height
 const SearchFormH = props => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [searchResultsH, setSearchResultsH] = useState([]);
