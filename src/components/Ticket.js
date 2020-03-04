@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -74,10 +74,22 @@ const fieldLength = {
 };
 
 const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
+	const [interimTitle, setITitle] = useState([]);
+	const [interimCategory, setICategory] = useState([]);
+	const [interimDescription, setIDescription] = useState([]);
 	values.title = ticket.title;
 	values.category = ticket.category;
 	values.description = ticket.description;
 
+	const handleChangeT = event => {
+		setITitle(event.target.value);
+	};
+	const handleChangeC = event => {
+		setICategory(event.target.value);
+	};
+	const handleChangeD = event => {
+		setIDescription(event.target.value);
+	};
 	if (values.statusesid === 1) {
 		values.statusText = 'queue';
 	} else if (values.statusesid === 2) {

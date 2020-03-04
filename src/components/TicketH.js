@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -67,6 +67,10 @@ const fieldLength = {
 	padding: '0'
 };
 const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
+	const [interimTitle, setITitle] = useState('');
+	const [interimCategory, setICategory] = useState('');
+	const [interimDescription, setIDescription] = useState('');
+
 	values.title = ticket.title;
 	values.category = ticket.category;
 	values.statusT = ticket.status;
@@ -110,8 +114,9 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 							type="text"
 							name="title"
 							placeholder={ticket.title}
-							value={values.title}
-							style={fieldLength}
+								value={interimTitle}
+								style={fieldLength}
+								onChange={event=>{setITitle(event.target.value)}}
 						/>
 					</SCField>
 				</FormField>
@@ -122,8 +127,9 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 							type="text"
 							name="category"
 							placeholder={values.category}
-							value={values.category}
+							value={interimCategory}
 							style={fieldLength}
+							onChange={event=>{setICategory(event.target.value)}}
 						/>
 					</SCField>
 				</FormField>
@@ -134,8 +140,9 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 							type="text"
 							name="description"
 							placeholder={values.description}
-							value={values.description}
+							value={interimDescription}
 							style={fieldLength}
+							onChange={event=>{setIDescription(event.target.value)}}
 						/>
 					</SCField>
 				</FormField>
@@ -198,9 +205,11 @@ const FormikForm = withFormik({
 		} else {
 			let statusText = 'in progress';
 		}
+		
 		axios
-			.get('https://devdesk2eli.herokuapp.com/api/users?email=' + values.email, values, config)
+			.put(`https://devdesk2eli.herokuapp.com/api/tickets/${values.ticketsid}`, values, config)
 			.then(res => {
+				console.log(res);
 				setStatus(res.data);
 				resetForm();
 				setSubmitting(false);
@@ -208,7 +217,7 @@ const FormikForm = withFormik({
 			})
 			.catch(err => {
 				setSubmitting(false);
-			});
+				console.log("values before put = " + values);});
 	}
 })(Ticket);
 

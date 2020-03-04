@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withFormik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -73,6 +73,10 @@ const fieldLength = {
 	padding: '0'
 };
 const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status }) => {
+	const [interimTitle, setITitle] = useState([]);
+	const [interimCategory, setICategory] = useState([]);
+	const [interimDescription, setIDescription] = useState([]);
+	
 	if (values.statusesid === 1) {
 		values.statusText = 'queue';
 	} else if (values.statusesid === 2) {
@@ -85,6 +89,7 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 	values.description = ticket.description;
 	values.statusesid = ticket.statusesid;
 	values.studentid = ticket.studentid;
+
 	// https://devdesk2eli.herokuapp.com/api
 	function updateTicket(ticketID, helperID, event) {
 		let config = {
@@ -106,6 +111,16 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 
 	}
 
+	const handleChangeT = event => {
+		setITitle(event.target.value);
+	};
+	const handleChangeC = event => {
+		setICategory(event.target.value);
+	};
+	const handleChangeD = event => {
+		setIDescription(event.target.value);
+	};
+	
 	return (
 		<Div1>
 			<H1>Ticket:</H1>
@@ -121,8 +136,9 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 								type="text"
 								name="title"
 								placeholder={ticket.title}
-								value={values.title}
+								value={interimTitle}
 								style={fieldLength}
+								onChange={event=>{setITitle(event.target.value)}}
 							/>
 						</SCField>
 					</FormField>
@@ -133,8 +149,9 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 								type="text"
 								name="category"
 								placeholder={values.category}
-								value={values.category}
+								value={interimCategory}
 								style={fieldLength}
+							onChange={event=>{setICategory(event.target.value)}}
 							/>
 						</SCField>
 					</FormField>
@@ -145,8 +162,9 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 								type="text"
 								name="description"
 								placeholder={values.description}
-								value={values.description}
+								value={interimDescription}
 								style={fieldLength}
+							onChange={event=>{setIDescription(event.target.value)}}
 							/>
 						</SCField>
 					</FormField>
@@ -156,7 +174,7 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 					<Button
 						type="submit"
 						id={'btnR' + ticket.id}
-						onClick={event => updateTicket(ticket.ticketsid, ticket.helperid, event)}
+						onClick={event => updateTicket(ticket.ticketsid, ticket.helperid, event)} 
 					>
 						Help Student
 					</Button>

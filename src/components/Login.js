@@ -117,6 +117,7 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 									.then(res => {
 										console.log('ticket queue = ' + res.data);
 										setTicketsQ(res.data);
+										console.log('usersid = ' + status.usersid);
 									})
 									.catch(err => {
 										console.log(err);
@@ -128,6 +129,7 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 									.get(url, config)
 									.then(res => {
 										setTicketsH(res.data);
+										console.log('usersid = ' + status.usersid);
 										console.log('helper tickets = ' + res.data);
 									})
 									.catch(err => {
