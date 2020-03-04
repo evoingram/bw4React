@@ -101,9 +101,7 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 			<H1>Ticket:</H1>
 			<Form>
 				{touched.title && errors.title && <p>{errors.title}</p>}
-				{touched.date && errors.date && <p>{errors.date}</p>}
 				{touched.category && errors.category && <p>{errors.category}</p>}
-				{touched.statusT && errors.statusT && <p>{errors.statusT}</p>}
 				{touched.description && errors.description && <p>{errors.description}</p>}
 				<FormField>
 					<Label>Title:</Label>
@@ -145,14 +143,14 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 					<Button type="submit">Save</Button>
 					<Button
 						type="submit"
-						id={'btnR' + ticket.id}
+						id={'btnR' + ticket.ticketsid}
 						onClick={event => updateTicket(ticket.ticketsid, 'resolved', event)}
 					>
 						Resolved
 					</Button>
 					<Button
 						type="submit"
-						id={'btnQ' + ticket.id}
+						id={'btnQ' + ticket.ticketsid}
 						onClick={event => updateTicket(ticket.ticketsid, 'queue', event)}
 					>
 						Send to Queue

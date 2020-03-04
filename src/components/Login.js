@@ -103,9 +103,8 @@ const UserForm = ({ values, errors, touched, isSubmitting, status }) => {
 					.then(res => {
 						setHelpers(res.data);
 						console.log('helpers = ' + res.data);
+						console.log('status = ' + status);
 						for (let x = 0; x < res.data.length; x++) {
-							console.log('helper = ' + res.data[x].name);
-							console.log('status.name = ' + status.name);
 							if (status.name === res.data[x].name) {
 								status = {
 									...status,
