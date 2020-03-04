@@ -90,7 +90,7 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 		};		
 		console.log("values before put = " + values);
 		axios
-			.put(`http://devdesk2eli.herokuapp.com/api/tickets/${ticket.ticketsid}`, {helperid: ticket.helperid}, config)
+			.put(`https://devdesk2eli.herokuapp.com/api/tickets/${ticket.ticketsid}`, {helperid: ticket.helperid}, config)
 			.then(res => {
 				console.log(res);
 			})
