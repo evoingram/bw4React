@@ -83,54 +83,27 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 	values.title = ticket.title;
 	values.category = ticket.category;
 	values.description = ticket.description;
+	values.statusesid = ticket.statusesid;
+	values.studentid = ticket.studentid;
 	// https://devdesk2eli.herokuapp.com/api
-	function updateTicket(ticketID, currentTicketStatus, helperID, event) {
-		values.helperid = helperID;
-		console.log('values = ' + values);
-		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`;
-		axios.defaults.headers.put['Content-Type'] = 'application/json';
-		let axiosConfig = {
-			url: `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`,
-			method: 'PUT',
+	function updateTicket(ticketID, helperID, event) {
+		let config = {
 			headers: {
-				'Content-Type': 'application/json',
-				authorization: localStorage.getItem('token')
-			},
-			body: values
-		};
-		if (values.statusesid === 1) {
-			values.statusText = 'queue';
-		} else if (values.statusesid === 2) {
-			values.statusText = 'resolved';
-		} else {
-			values.statusText = 'in progress';
-		}
+				authorization: localStorage.getItem('token'),
+				'Content-Type': 'application/json'
+			}
+		};		
+		console.log("values before put = " + values);
 		axios
-			.put(
-				url,
-				{
-					status: values.statusText
-				},
-				axiosConfig
-			)
+			.put(`http://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`, {helperid: helperID, statusesid:3}, config)
 			.then(res => {
-				if (values.statusesid === 1) {
-					values.statusText = 'queue';
-				} else if (values.statusesid === 2) {
-					values.statusText = 'resolved';
-				} else {
-					values.statusText = 'in progress';
-				}
+				console.log(res);
+
+				
+				window.location = "/"
 			})
-			.catch(err => {
-				if (values.statusesid === 1) {
-					values.statusText = 'queue';
-				} else if (values.statusesid === 2) {
-					values.statusText = 'resolved';
-				} else {
-					values.statusText = 'in progress';
-				}
-			});
+			.catch(err => {console.log("values before put = " + values);});
+
 	}
 
 	return (
@@ -138,9 +111,7 @@ const Ticket = ({ profile, ticket, values, errors, touched, isSubmitting, status
 			<H1>Ticket:</H1>
 			<Form>
 				{touched.title && errors.title && <p>{errors.title}</p>}
-				{touched.date && errors.date && <p>{errors.date}</p>}
 				{touched.category && errors.category && <p>{errors.category}</p>}
-				{touched.statusText && errors.statusText && <p>{errors.statusText}</p>}
 				{touched.description && errors.description && <p>{errors.description}</p>}
 				<Div>
 					<FormField>

@@ -36,7 +36,7 @@ const TicketListS = props => {
 			<HeaderH onClick={expandListT} />
 			<div className="character-list" id="ticketListH">
 				{props.searchResults.map(ticket => (
-					<TicketH key={ticket.id} ticket={ticket} />
+					<TicketH key={ticket.ticketsid} ticket={ticket} />
 				))}
 			</div>
 		</section>

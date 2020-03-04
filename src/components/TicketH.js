@@ -73,25 +73,28 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 	values.description = ticket.description;
 
 	function updateTicket(ticketID, currentTicketStatus, event) {
+		console.log('currentTicketStatus = ' + currentTicketStatus);
 		if (currentTicketStatus === 'resolved' && event.target.id === 'btnR' + ticketID) {
 			ticket.status = 'resolved';
+			values.statusesid = 2;
 		}
 		if (currentTicketStatus === 'queue' && event.target.id === 'btnQ' + ticketID) {
 			ticket.status = 'queue';
+			values.statusesid = 1;
 		}
-		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`;
-		axios.defaults.headers.put['Content-Type'] = 'application/json';
-		let axiosConfig = {
-			url: `https://devdesk2eli.herokuapp.com/api/tickets/${ticketID}`,
-			method: 'PUT',
-			headers: { 'Content-Type': 'application/json', authorization: localStorage.getItem('token') },
-			body: values
-		};
-
+		let config = {
+			headers: {
+				authorization: localStorage.getItem('token'),
+				'Content-Type': 'application/json'
+			}
+		};		
+		console.log("values before put = " + values);
 		axios
-			.put(url, { status: values.statusT }, axiosConfig)
-			.then(res => {})
-			.catch(err => {});
+			.put(`http://devdesk2eli.herokuapp.com/api/tickets/${ticket.ticketsid}`, {helperid: ticket.helperid}, config)
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {console.log("values before put = " + values);});
 	}
 	return (
 		<Div1>
@@ -115,18 +118,6 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 					</SCField>
 				</FormField>
 				<FormField>
-					<Label>Date Submitted:</Label>
-					<SCField>
-						<Field
-							type="text"
-							name="date"
-							placeholder={ticket.date}
-							value={values.date}
-							style={fieldLength}
-						/>
-					</SCField>
-				</FormField>
-				<FormField>
 					<Label>Category:</Label>
 					<SCField>
 						<Field
@@ -134,18 +125,6 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 							name="category"
 							placeholder={values.category}
 							value={values.category}
-							style={fieldLength}
-						/>
-					</SCField>
-				</FormField>
-				<FormField>
-					<Label>Status:</Label>
-					<SCField>
-						<Field
-							type="text"
-							name="statusT"
-							placeholder={values.statusT}
-							value={values.statusT}
 							style={fieldLength}
 						/>
 					</SCField>
@@ -167,14 +146,14 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 					<Button
 						type="submit"
 						id={'btnR' + ticket.id}
-						onClick={event => updateTicket(ticket.id, 'resolved', event)}
+						onClick={event => updateTicket(ticket.ticketsid, 'resolved', event)}
 					>
 						Resolved
 					</Button>
 					<Button
 						type="submit"
 						id={'btnQ' + ticket.id}
-						onClick={event => updateTicket(ticket.id, 'queue', event)}
+						onClick={event => updateTicket(ticket.ticketsid, 'queue', event)}
 					>
 						Send to Queue
 					</Button>

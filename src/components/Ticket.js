@@ -94,10 +94,12 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 		};
 
 		ticket = values;
-		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticket.id}`;
+		let url = `https://devdesk2eli.herokuapp.com/api/tickets/${ticket.ticketsid}`;
 		axios
 			.put(url, ticket, config)
-			.then(res => {})
+			.then(res => {
+				
+				window.location = "/"})
 			.catch(err => {});
 	}
 	return (
@@ -107,7 +109,6 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 				<Div>
 					{touched.title && errors.title && <p>{errors.title}</p>}
 					{touched.category && errors.category && <p>{errors.category}</p>}
-					{touched.statusText && errors.statusText && <p>{errors.statusText}</p>}
 					{touched.description && errors.description && <p>{errors.description}</p>}
 					<FormField>
 						<Label>Title:</Label>
@@ -129,18 +130,6 @@ const Ticket = ({ ticket, values, errors, touched, isSubmitting, status }) => {
 								name="category"
 								placeholder={ticket.category}
 								value={values.category}
-								style={fieldLength}
-							/>
-						</SCField>
-					</FormField>
-					<FormField>
-						<Label>Status:</Label>
-						<SCField>
-							<Field
-								type="text"
-								name="statusText"
-								placeholder={values.statusText}
-								value={values.statusText}
 								style={fieldLength}
 							/>
 						</SCField>

@@ -114,7 +114,7 @@ const SearchFormQ = props => {
 							/>
 						</SearchDiv>
 						{searchResultsQ.map(ticket => (
-							<TicketQ key={ticket.id} ticket={ticket} />
+							<TicketQ key={ticket.ticketsid} ticket={ticket} />
 						))}
 					</Form>
 				</Div1>
