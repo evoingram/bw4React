@@ -9,9 +9,7 @@ This is my old React I build week project, which previously only had a local bac
 Still work in progress; haven't done update/put stuff yet.  But everything else works great.  Helpers can see their assigned tickets as well as the queue, and students can create tickets and view tickets they've created.  Helpers who are also students can see both.  You can view your profile but not edit it yet.
 
 
-# Title
-
-## Product Overview
+# Title Product Overview
 
 * You can find the deployed project at 
 
@@ -22,7 +20,7 @@ Still work in progress; haven't done update/put stuff yet.  But everything else 
 
 * [Design Files]()
 
-# Project Description
+## Project Description
 
 
 
@@ -32,42 +30,24 @@ Still work in progress; haven't done update/put stuff yet.  But everything else 
 
 ## Tech Stack
 
-Front end deployed to `Netlify` and built using:
+Front end deployed to `Heroku` and built using:
 
-- [React](https://www.apollographql.com/): ReactJS is an open-source JavaScript library which is used for building user interfaces specifically for single page applications. It's used for handling view layer for web and mobile apps. React also allows us to create reusable UI components.
+- [React](https://reactjs.org/): ReactJS is an open-source JavaScript library which is used for building user interfaces specifically for single page applications. It's used for handling view layer for web and mobile apps. React also allows us to create reusable UI components.
 - [Cypress](https://github.com/cypress-io/cypress):  fast, easy and reliable testing for anything that runs in a browser.
 - []():  Description
 - []():  Description
 - []():  Description
 
-# Available Scripts 
+## Available Scripts 
 
 in the project directory, you can run: 
 
 ### `npm start`
 
-# APIs
-
-## Auth0 authentication API 
-
-## Environment Variables
-
-#### Variables:
+## APIs
    
-# Testing
+## Testing
 
-## Cypress
-
-# Contributing
-
-## Issue/Bug Request
-
-## Feature Requests
-
-## Pull Requests
-
-### Pull Request Guidelines
-
-## Attribution
+- Cypress testing will be completed in a future release.
 
 ## Documentation
