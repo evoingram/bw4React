@@ -2,6 +2,10 @@
 
 # React Support Ticketing System (DevDesk) Product Overview
 
+## My Role
+
+I served as project lead when I did the back end portion of this project for my unit four build week as well as assisting in planning and deployment using Agile methodology.  However, I have also completed the React portion of this same project in previous build weeks.  So this repo is the React portion from my previous build weeks attached to the back end I did for my unit four build week.  
+
 ## Project Description
 
 [Deployed Project](https://devdeskelireact.now.sh/)
@@ -49,4 +53,4 @@ in the project directory, you can run:
 
 ## Documentation
 
-### [BW4 SCHEMA](https://dbdesigner.page.link/urgi8jQCzNMRBtiX8)   |   [POSTMAN DOCUMENTATION](https://documenter.getpostman.com/view/6401823/SzKbLvH5?version=latest#13325605-4e44-4804-8593-4c9acbb0e929)
+### [BW4 SCHEMA](https://dbdesigner.page.link/urgi8jQCzNMRBtiX8)   |   [POSTMAN DOCUMENTATION](https://documenter.getpostman.com/view/6401823/SzKbLvH5?version=latest#13325605-4e44-4804-8593-4c9acbb0e929)   |   [Trello Board Back End](https://trello.com/b/Ww7sTkWq/bw-devdesk2)
