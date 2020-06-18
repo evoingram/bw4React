@@ -28,6 +28,8 @@ Still work in progress; haven't done update/put stuff yet.  But everything else 
 
 ## Key Features
 
+- Live solo project
+
 ## Tech Stack
 
 Front end deployed to `Netlify` and built using:
