@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/aaf684998357f6c7364c/maintainability)](https://codeclimate.com/github/evoingram/bw4React/maintainability)
+
 ## Build Week Project
 
 Live @ https://devdeskelireact.now.sh/
